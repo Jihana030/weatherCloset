@@ -11,3 +11,21 @@ javascript
 
 cd frontend
 npm install
+
+3. 깃허브 연결
+
+4. 프로젝트 연동(spring과 react)
+npm install http-proxy-middleware --save
+
+5. 연동 잘 되었는지 통신테스트
+npm install axios --save
+app.js, hellocontroller에 값 넣어주고
+각 서버 동작하는지 체크.
+
+6. 빌드 테스트
+build.gradle에 리액트 실행 후 스프링 실행한다는 코드 추가.
+
+제일 상위 폴더로 이동
+./gradlew build
+java -jar build/libs/weatherCloset-0.0.1-SNAPSHOP.jar
+빌드 잘 되는지 테스트.
