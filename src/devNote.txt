@@ -1,0 +1,13 @@
+[weatherCloset]
+
+1. 스프링 프로젝트 생성
+2. 리액트 설치
+(의존성 문제가 계속 생겨서)
+npm create vite@latest
+y
+frontend
+react
+javascript
+
+cd frontend
+npm install
