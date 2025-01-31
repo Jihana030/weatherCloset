@@ -1,6 +1,15 @@
 *{
   padding: 0; margin: 0; box-sizing: border-box;
 }
+:root {
+  --main-blue01: #9EC9E2;
+  --main-blue02: #82A1D2;
+  --main-blue03: #577FCD;
+  --main-blue04: #253F7C;
+  --main-blue05: #102254;
+  --main-skyGray: #EEF5FA;
+  --main-white: #FFFFFF;
+}
 a {text-decoration: none;}
 li{list-style: none;}
 input:focus{outline: none;}
