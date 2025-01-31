@@ -2,6 +2,7 @@
 
 1. 스프링 프로젝트 생성
 2. 리액트 설치
+cd src/main
 (의존성 문제가 계속 생겨서)
 npm create vite@latest
 y
@@ -15,6 +16,7 @@ npm install
 3. 깃허브 연결
 
 4. 프로젝트 연동(spring과 react)
+(frontend에서)
 npm install http-proxy-middleware --save
 
 5. 연동 잘 되었는지 통신테스트
