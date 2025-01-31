@@ -6,6 +6,7 @@ const categoryStyle = styled.ul`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    border-radius: 0 0 0 10px;
     li {
         background: var(--main-blue01);
         color: var(--main-white);
