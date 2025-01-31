@@ -17,7 +17,7 @@ npm install
 
 4. 프로젝트 연동(spring과 react)
 (frontend에서)
-npm install http-proxy-middleware --save
+npm install http-proxy-middleware --savecd
 
 5. 연동 잘 되었는지 통신테스트
 npm install axios --save
