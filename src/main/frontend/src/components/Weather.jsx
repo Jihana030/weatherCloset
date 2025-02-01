@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-const weatherStyle = styled.div`
+const WeatherStyle = styled.div`
     padding: 30px;
     .date {
         color: var(--main-blue05);
@@ -27,7 +27,7 @@ const weatherStyle = styled.div`
 `
 function Weather() {
     return (
-        <div>
+        <WeatherStyle>
             <div className="date">2025년 01월 31일</div>
             <div className="weather_data">
                 <div className="weather_area">대구</div>
@@ -39,7 +39,7 @@ function Weather() {
                     <span className="material-symbols-rounded">cloud</span>
                 </div>
             </div>
-        </div>
+        </WeatherStyle>
     )
 }
 

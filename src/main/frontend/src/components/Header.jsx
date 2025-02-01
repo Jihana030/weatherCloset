@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Weather from "./Weather.jsx";
 import Sidebar from "./Sidebar.jsx";
 
-const headerStyle = styled.div`
+const HeaderStyle = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -11,10 +11,10 @@ const headerStyle = styled.div`
 `
 function Header() {
     return (
-        <div className="header">
+        <HeaderStyle className="header">
             <Weather></Weather>
             <Sidebar></Sidebar>
-        </div>
+        </HeaderStyle>
     )
 }
 

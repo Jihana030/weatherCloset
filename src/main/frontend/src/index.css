@@ -9,6 +9,8 @@
   --main-blue05: #102254;
   --main-skyGray: #EEF5FA;
   --main-white: #FFFFFF;
+  --main-grey: #EEEEEE;
+  --main-yellow: #FEB820;
 }
 a {text-decoration: none;}
 li{list-style: none;}

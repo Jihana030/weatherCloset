@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const categoryStyle = styled.ul`
+const CategoryStyle = styled.ul`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -19,12 +19,12 @@ const categoryStyle = styled.ul`
 
 function Sidebar() {
     return (
-        <categoryStyle>
+        <CategoryStyle>
             <li className="select">옷장</li>
             <li>지역변경</li>
             <li>게시판</li>
             <li>마이페이지</li>
-        </categoryStyle>
+        </CategoryStyle>
     )
 }
 
