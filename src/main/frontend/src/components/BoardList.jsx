@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header.jsx";
-import Table from "./Table.jsx";
+import ListTable from "./ListTable.jsx";
 
-function Board() {
+function BoardList() {
     return (
         <div>
             <Header></Header>
-            <Table></Table>
+            <ListTable></ListTable>
         </div>
     )
 }
 
-export default Board;
+export default BoardList;

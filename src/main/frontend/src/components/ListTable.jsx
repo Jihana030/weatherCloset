@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Table() {
+function ListTable() {
     return (
         <TableStyled>
             <table>
@@ -50,4 +50,4 @@ const TableStyled = styled.div`
     }
 `
 
-export default Table;
+export default ListTable;
