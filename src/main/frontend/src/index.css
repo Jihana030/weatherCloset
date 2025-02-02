@@ -15,6 +15,9 @@
 a {text-decoration: none;}
 li{list-style: none;}
 input:focus{outline: none;}
+table {border-collapse: collapse; border-spacing: 0;}
+th {background: var(--main-skyGray); padding: 5px; border: 1px solid var(--main-blue01);}
+td {padding: 5px; border: 1px solid var(--main-blue01);}
 
 @font-face{
   font-family: 'Pretendard';

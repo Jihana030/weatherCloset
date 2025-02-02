@@ -23,6 +23,7 @@ const CategoryStyle = styled.ul`
         background: var(--main-blue01);
         color: var(--main-white);
         padding: 16px;
+        cursor: pointer;
     }
     li.select {
         background: var(--main-blue04);

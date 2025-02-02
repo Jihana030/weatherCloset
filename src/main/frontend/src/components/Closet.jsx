@@ -50,11 +50,12 @@ const ClothesStyles = styled.div`
             justify-content: flex-start;
             align-items: center;
             li {
-                margin: 0 10px;
+                margin: 0 5px;
                 padding: 10px 20px;
                 background: var(--main-blue02);
                 color: var(--main-white);
                 white-space: nowrap;
+                cursor: pointer;
                 &:first-child {
                     margin-left: 0;
                 }

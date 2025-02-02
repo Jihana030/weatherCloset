@@ -30,6 +30,7 @@ const WearStyle = styled.div`
         right: 10px;
         color: var(--main-yellow);
         font-size: 30px;
+        cursor: pointer;
         &.fill {
             font-variation-settings:
             'FILL' 1,
