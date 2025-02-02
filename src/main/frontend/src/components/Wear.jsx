@@ -2,6 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import wear from "../assets/img/basicwear.png";
 
+function Wear() {
+    return (
+        <WearStyle>
+            <img src={wear} alt="wear"/>
+            <span className="material-symbols-rounded star fill">star</span>
+        </WearStyle>
+    )
+}
+
 const WearStyle = styled.div`
     background: var(--main-grey);
     border-radius: 10px;
@@ -30,14 +39,5 @@ const WearStyle = styled.div`
         }
     }
 `
-
-function Wear() {
-    return (
-        <WearStyle>
-            <img src={wear} alt="wear"/>
-            <span className="material-symbols-rounded star fill">star</span>
-        </WearStyle>
-    )
-}
 
 export default Wear;

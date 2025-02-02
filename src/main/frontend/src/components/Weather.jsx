@@ -1,30 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-const WeatherStyle = styled.div`
-    padding: 30px;
-    .date {
-        color: var(--main-blue05);
-        font-size: 15px;
-        margin-bottom: 20px;
-    }
-    .weather_data {
-        color: var(--main-blue03);
-        font-size: 24px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .weather_figure {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .weather_icon {
-        font-size: 40px;
-    }
-`
+
 function Weather() {
     return (
         <WeatherStyle>
@@ -42,5 +18,36 @@ function Weather() {
         </WeatherStyle>
     )
 }
+
+const WeatherStyle = styled.div`
+    margin-left: 10%;
+    font-weight: 700;
+    padding: 30px;
+    .date {
+        color: var(--main-blue05);
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+    .weather_data {
+        color: var(--main-blue03);
+        font-size: 24px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        > div {
+            margin: 0 10px;
+        }
+    }
+    .weather_figure {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .weather_icon span {
+        font-size: 40px;
+    }
+`
 
 export default Weather;

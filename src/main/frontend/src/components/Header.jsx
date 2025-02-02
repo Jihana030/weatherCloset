@@ -3,12 +3,6 @@ import styled from "styled-components";
 import Weather from "./Weather.jsx";
 import Sidebar from "./Sidebar.jsx";
 
-const HeaderStyle = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-`
 function Header() {
     return (
         <HeaderStyle className="header">
@@ -17,5 +11,12 @@ function Header() {
         </HeaderStyle>
     )
 }
+
+const HeaderStyle = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+`
 
 export default Header;
