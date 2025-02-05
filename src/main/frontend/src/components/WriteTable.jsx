@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-function ViewTable() {
+function WriteTable() {
     return (
         <div>
             <table>
                 <tbody>
                 <tr>
                     <th>제목</th>
-                    <td>옷 늘려주세요</td>
+                    <td>
+                        <input type="text"/>
+                    </td>
                 </tr>
                 <tr>
                     <th>작성자</th>
@@ -16,7 +18,9 @@ function ViewTable() {
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td>hi</td>
+                    <td>
+                        <textarea name="" id="" cols="30" rows="10"></textarea>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -24,4 +28,4 @@ function ViewTable() {
     )
 }
 
-export default ViewTable;
+export default WriteTable;

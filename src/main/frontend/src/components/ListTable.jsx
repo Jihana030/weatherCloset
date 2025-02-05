@@ -8,7 +8,7 @@ function ListTable() {
                 <thead>
                 <tr>
                     <th>번호</th>
-                    <th>내용</th>
+                    <th>제목</th>
                     <th>작성일</th>
                 </tr>
                 </thead>

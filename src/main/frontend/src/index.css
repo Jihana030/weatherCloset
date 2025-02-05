@@ -14,10 +14,16 @@
 }
 a {text-decoration: none;}
 li{list-style: none;}
+input {padding: 10px; border-radius: 10px; outline: none; border: 1px solid var(--main-skyGray);}
+textarea {padding: 10px; border-radius: 10px; outline: none; border: 1px solid var(--main-skyGray);}
 input:focus{outline: none;}
 table {border-collapse: collapse; border-spacing: 0;}
-th {background: var(--main-skyGray); padding: 5px; border: 1px solid var(--main-blue01);}
+th {background: var(--main-skyGray); padding: 5px;}
+th:first-child {border-right: 1px solid var(--main-blue01);}
+th:last-child {border-left: 1px solid var(--main-blue01);}
 td {padding: 5px; border: 1px solid var(--main-blue01);}
+td:first-child {border-right: 1px solid var(--main-blue01);}
+td:last-child {border-left: 1px solid var(--main-blue01);}
 
 @font-face{
   font-family: 'Pretendard';
