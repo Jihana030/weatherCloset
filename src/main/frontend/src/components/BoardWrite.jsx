@@ -1,13 +1,28 @@
 import React from "react";
-import styled from "styled-components";
-import Header from "./Header.jsx";
-import WriteTable from "./WriteTable.jsx";
 
 function BoardWrite() {
     return (
         <div>
-            <Header />
-            <WriteTable></WriteTable>
+            <table>
+                <tbody>
+                <tr>
+                    <th>제목</th>
+                    <td>
+                        <input type="text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td>닉네임</td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td>
+                        <textarea name="" id="" cols="30" rows="10"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     )
 }

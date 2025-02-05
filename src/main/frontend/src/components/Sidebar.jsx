@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 function Sidebar() {
     return (
         <CategoryStyle>
-            <li className="select">옷장</li>
-            <li>지역변경</li>
-            <li>게시판</li>
-            <li>마이페이지</li>
+            <Link to="/" className="select li">옷장</Link>
+            <Link to="/" className="li">지역변경</Link>
+            <Link to="/boardList" className="li">게시판</Link>
+            <Link to="/" className="li">마이페이지</Link>
         </CategoryStyle>
     )
 }
@@ -19,13 +20,13 @@ const CategoryStyle = styled.ul`
     align-items: center;
     border-radius: 0 0 0 10px;
     overflow: hidden;
-    li {
+    .li {
         background: var(--main-blue01);
         color: var(--main-white);
         padding: 16px;
         cursor: pointer;
     }
-    li.select {
+    .li.select {
         background: var(--main-blue04);
     }
 `

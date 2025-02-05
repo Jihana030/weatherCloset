@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "./components/Header.jsx";
-import Dressing from "./components/Dressing.jsx";
+import {Outlet} from "react-router-dom";
 
 function App() {
 
   return (
     <>
       <Header />
-      <Dressing/>
+      <Outlet/>
     </>
   )
 }

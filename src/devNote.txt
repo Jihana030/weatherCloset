@@ -31,3 +31,5 @@ build.gradle에 리액트 실행 후 스프링 실행한다는 코드 추가.
 ./gradlew build
 java -jar build/libs/weatherCloset-0.0.1-SNAPSHOP.jar
 빌드 잘 되는지 테스트.
+
+7. npm i react-router-dom
