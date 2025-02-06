@@ -5,9 +5,9 @@ import {Link} from "react-router-dom";
 function Sidebar() {
     return (
         <CategoryStyle>
-            <Link to="/" className="select li">옷장</Link>
+            <Link to="dressing" className="select li">옷장</Link>
             <Link to="/" className="li">지역변경</Link>
-            <Link to="/boardList" className="li">게시판</Link>
+            <Link to="boardList" className="li">게시판</Link>
             <Link to="/" className="li">마이페이지</Link>
         </CategoryStyle>
     )

@@ -12,16 +12,16 @@
   --main-grey: #EEEEEE;
   --main-yellow: #FEB820;
 }
-a {text-decoration: none;}
+a {text-decoration: none; color: var(--main-blue05)}
 li{list-style: none;}
 input {padding: 10px; border-radius: 10px; outline: none; border: 1px solid var(--main-skyGray);}
 textarea {padding: 10px; border-radius: 10px; outline: none; border: 1px solid var(--main-skyGray);}
 input:focus{outline: none;}
 table {border-collapse: collapse; border-spacing: 0;}
-th {background: var(--main-skyGray); padding: 5px;}
+th {background: var(--main-skyGray); padding: 5px; text-align: center;}
 th:first-child {border-right: 1px solid var(--main-blue01);}
 th:last-child {border-left: 1px solid var(--main-blue01);}
-td {padding: 5px; border: 1px solid var(--main-blue01);}
+td {padding: 5px; border-bottom: 1px solid var(--main-blue01); text-align: center;}
 td:first-child {border-right: 1px solid var(--main-blue01);}
 td:last-child {border-left: 1px solid var(--main-blue01);}
 
@@ -31,4 +31,5 @@ td:last-child {border-left: 1px solid var(--main-blue01);}
 }
 body {
   font-family: 'Pretendard', serif;
+  color: var(--main-blue05);
 }
