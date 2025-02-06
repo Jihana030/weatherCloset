@@ -10,6 +10,11 @@ function Weather() {
     const day = now.getDate();
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     let weekday = week[now.getDay()];
+
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    // 30분 기준으로 값 변경
+
     // 현재 위치(좌표값)
     const geolocationOptions = {
         enableHighAccuracy: true,
@@ -21,7 +26,8 @@ function Weather() {
 
     // 날씨 api
     const key = import.meta.env.VITE_WEATHER_API_KEY; //vite는 process 아닌 import.meta 사용
-    const url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0';
+    const endPoint = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst';
+    let url = `${endPoint}?serviceKey=${key}&numOfRows=10&pageNo=1&base_date=${year}${month}${day}&base_time=${hour}`;
 
 
     return (
