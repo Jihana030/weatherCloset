@@ -53,21 +53,21 @@ function Weather() {
     function error(e) {}
 
     // 위도, 경도로 현재 위치 찾기(kakao api) - https여야해서, 서버가 없는 지금 이걸..
-    const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
-    let kakaoUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
-    async function positionData(url="", data={}){
-        const response = await fetch(url,{
-            method: 'GET',
-            headers: {
-                'Authorization': `KakaoAK ${kakaoKey}`,
-                'content-type': 'application/json'
-            },
-        });
-        return response.json();
-    }
-    positionData(kakaoUrl).then(data => {
-        console.log(data);
-    })
+    // const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
+    // let kakaoUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
+    // async function positionData(url="", data={}){
+    //     const response = await fetch(url,{
+    //         method: 'GET',
+    //         headers: {
+    //             'Authorization': `KakaoAK ${kakaoKey}`,
+    //             'content-type': 'application/json'
+    //         },
+    //     });
+    //     return response.json();
+    // }
+    // positionData(kakaoUrl).then(data => {
+    //     console.log(data);
+    // })
 
     // 날씨 api
     const weatherKey = import.meta.env.VITE_WEATHER_API_KEY; //vite는 process 아닌 import.meta 사용
