@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 function Weather() {
     // 오늘 날짜
@@ -46,21 +47,35 @@ function Weather() {
         }
     })
     function success(e) {
-        setLatitude(Math.floor(e.coords.latitude))
-        setLongitude(Math.floor(e.coords.longitude))
+        setLatitude(e.coords.latitude)
+        setLongitude(e.coords.longitude)
     }
     function error(e) {}
 
-    // 위도, 경도로 현재 위치 찾기(kakao api)
-
+    // 위도, 경도로 현재 위치 찾기(kakao api) - https여야해서, 서버가 없는 지금 이걸..
+    const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
+    let kakaoUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
+    async function positionData(url="", data={}){
+        const response = await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Authorization': `KakaoAK ${kakaoKey}`,
+                'content-type': 'application/json'
+            },
+        });
+        return response.json();
+    }
+    positionData(kakaoUrl).then(data => {
+        console.log(data);
+    })
 
     // 날씨 api
-    const key = import.meta.env.VITE_WEATHER_API_KEY; //vite는 process 아닌 import.meta 사용
+    const weatherKey = import.meta.env.VITE_WEATHER_API_KEY; //vite는 process 아닌 import.meta 사용
     const endPoint = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
-    let url = `${endPoint}?serviceKey=${key}&numOfRows=10&pageNo=1&base_date=${year}${month}${day}&base_time=${hour}${minute}&nx=${longitude}&ny=${latitude}`;
+    let weatherUrl = `${endPoint}?serviceKey=${weatherKey}&numOfRows=10&pageNo=1&base_date=${year}${month}${day}&base_time=${hour}${minute}&nx=${longitude}&ny=${latitude}`;
     const [degrees, setDegrees] = useState('');
     const [windSpeed, setWindSpeed] = useState('');
-    fetch(url)
+    fetch(weatherUrl)
         .then(res => res.text())
         .then(str=>new DOMParser().parseFromString(str,'application/xml'))
         .then(xml=>{
@@ -79,8 +94,8 @@ function Weather() {
             <div className="weather_data">
                 <div className="weather_area">대구</div>
                 <div className="weather_figure">
-                    <div className="weather_degrees">5℃</div>
-                    <div className="weather_wind">2m/s</div>
+                    <div className="weather_degrees">{degrees}℃</div>
+                    <div className="weather_wind">{windSpeed}m/s</div>
                 </div>
                 <div className="weather_icon">
                     <span className="material-symbols-rounded">cloud</span>
