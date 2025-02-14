@@ -14,31 +14,11 @@ function Weather() {
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     let weekday = week[now.getDay()];
 
-    const nowHour = now.getHours();
-    let hour;
-    if(5 > nowHour >= 2){
-        hour = '02';
-    } else if (8 > nowHour >= 5){
-        hour = '05';
-    } else if (11 > nowHour >= 8){
-        hour = '08';
-    } else if (14 > nowHour >= 11){
-        hour = '11';
-    } else if (17 > nowHour >= 14){
-        hour = '14';
-    } else if (20 > nowHour >= 17){
-        hour = '17';
-    } else if (23 > nowHour >= 20){
-        hour = '20';
-    } else {
-        hour = '23';
-    }
-    const nowMinute = now.getMinutes();
-    let minute;
-    if (nowMinute >= 10) {
-        minute = '10';
-    } else {
-        minute = '00';
+    let hour = ('0' + now.getHours()).slice(-2);
+    let minute = ('0' + (now.getMinutes() - 30)).slice(-2);
+    if(now.getMinutes() < 30) {
+        hour = ('0' + (now.getHours() - 1)).slice(-2);
+        minute = ('0' + (now.getMinutes() + 30)).slice(-2);
     }
 
     // 현재 위치(좌표값)(위도(y) latitude, 경도(x) longitude)
@@ -47,23 +27,22 @@ function Weather() {
     const [xPosition, setXPosition] = useState('');
     const [yPosition, setYPosition] = useState('');
     let rs;
-    window.addEventListener('load', e => {
-        if (window.navigator.geolocation) {
-            window.navigator.geolocation.getCurrentPosition(success, error)
-        }
-    })
+    window.navigator.geolocation.getCurrentPosition(success, error)
+    console.log(rs);
     function success(e) {
         // setLatitude(e.coords.latitude)
         // setLongitude(e.coords.longitude)
         setLatitude(35.908607)
         setLongitude(128.608271)
         // 기상청 격자값으로 변환
-        rs = useDfsXyConv("toXY", Math.floor(latitude), Math.floor(longitude));
+        rs = useDfsXyConv("toXY", latitude, longitude);
         console.log(rs);
         setXPosition(rs.x);
         setYPosition(rs.y);
     }
-    function error(e) {}
+    function error(e) {
+        return;
+    }
 
     // 위도, 경도로 현재 위치 찾기(kakao api)
     const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
@@ -79,7 +58,6 @@ function Weather() {
         return response.json();
     }
     addrData(kakaoAddrUrl).then(data => {
-        console.log(data.documents[0].address);
         setWeatherArea1(data.documents[0].address.region_1depth_name);
         setWeatherArea2(data.documents[0].address.region_2depth_name);
     })
@@ -88,19 +66,40 @@ function Weather() {
     const weatherKey = import.meta.env.VITE_WEATHER_API_KEY; //vite는 process 아닌 import.meta 사용
     const endPoint = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
     let weatherUrl = `${endPoint}?serviceKey=${weatherKey}&numOfRows=10&pageNo=1&base_date=${year}${month}${day}&base_time=${hour}${minute}&nx=${xPosition}&ny=${yPosition}`;
-    const [degrees, setDegrees] = useState('');
-    const [windSpeed, setWindSpeed] = useState('');
+    const [degrees, setDegrees] = useState('10');
+    const [windSpeed, setWindSpeed] = useState('2');
+    const [sky, setSky] = useState('');
+    const [rain, setRain] = useState('');
     fetch(weatherUrl)
         .then(res => res.text())
         .then(str=>new DOMParser().parseFromString(str,'application/xml'))
         .then(xml=>{
             const itemsTag = xml.getElementsByTagName('items');
-            const items = itemsTag[0];
-            // items.forEach(item=>{
-            //     if(item.getElementsByTagName('category').innerText ){}
-            // })
-            // console.log(xml)
-        //     category WSD(풍속), TMP(1시간 기온), SKY(하늘상태), 값이
+            const items = itemsTag[0].childNodes;
+            items.forEach(item=>{
+                let category = item.querySelector('category');
+                if(category.textContent === 'T1H' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    if( 900 > parseInt(obsrValue) > -900){
+                        setDegrees(obsrValue + '℃');
+                    } else {
+                        setDegrees('알 수 없음');
+                    }
+                } else if (category.textContent === 'WSD' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    if( 900 > parseInt(obsrValue) > -900){
+                        setWindSpeed(obsrValue + 'm/s');
+                    } else {
+                        setDegrees('알 수 없음');
+                    }
+                } else if (category.textContent === 'SKY' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    setSky(obsrValue);
+                } else if (category.textContent === 'PTY' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    setRain(obsrValue);
+                }
+            })
         })
 
     return (
@@ -109,8 +108,8 @@ function Weather() {
             <div className="weather_data">
                 <div className="weather_area">{weatherArea1} {weatherArea2}</div>
                 <div className="weather_figure">
-                    <div className="weather_degrees">{degrees}℃</div>
-                    <div className="weather_wind">{windSpeed}m/s</div>
+                    <div className="weather_degrees">{degrees}</div>
+                    <div className="weather_wind">{windSpeed}</div>
                 </div>
                 <div className="weather_icon">
                     <span className="material-symbols-rounded">cloud</span>
