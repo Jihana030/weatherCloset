@@ -5,7 +5,7 @@ import {Outlet} from "react-router-dom";
 function Home(){
     return (
         <div>
-            <Header />
+            <Header/>
             <Outlet/>
         </div>
     )

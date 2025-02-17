@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {Suspense, useEffect, useState} from "react";
 import styled from "styled-components";
 import useDfsXyConv from "./hooks/useDfsXyConv.jsx";
+import Loading from "./Loading.jsx";
+import Header from "./Header.jsx";
 
 function Weather() {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     // 위치 주소
     const [weatherArea1, setWeatherArea1] = useState('');
     const [weatherArea2, setWeatherArea2] = useState('');
@@ -36,81 +40,77 @@ function Weather() {
     const [rain, setRain] = useState(1);
     const [icon, setIcon] = useState('sunny');
 
-    useEffect(() => {
-        window.navigator.geolocation.getCurrentPosition(success, error)
+    window.navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+    // 위도, 경도로 현재 위치 찾기(kakao api)
+    const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
+    let kakaoAddrUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
+    async function addrData(url="", data={}){
+        const response = await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Authorization': `KakaoAK ${kakaoKey}`,
+                'content-type': 'application/json'
+            },
+        });
+        return response.json();
+    }
+    addrData(kakaoAddrUrl).then(data => {
+        setWeatherArea1(data.documents[0].address.region_1depth_name);
+        setWeatherArea2(data.documents[0].address.region_2depth_name);
+    })
 
-        // 위도, 경도로 현재 위치 찾기(kakao api)
-        const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
-        let kakaoAddrUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
-        async function addrData(url="", data={}){
-            const response = await fetch(url,{
-                method: 'GET',
-                headers: {
-                    'Authorization': `KakaoAK ${kakaoKey}`,
-                    'content-type': 'application/json'
-                },
-            });
-            return response.json();
-        }
-        addrData(kakaoAddrUrl).then(data => {
-            setWeatherArea1(data.documents[0].address.region_1depth_name);
-            setWeatherArea2(data.documents[0].address.region_2depth_name);
-        })
-
-        //날씨api
-        async function weatherData(url=""){
-            const [response] = await Promise.all([fetch(url)]);
-            return response;
-        }
-        weatherData(weatherUrl)
-            .then(res => res.text())
-            .then(str=>new DOMParser().parseFromString(str,'application/xml'))
-            .then(xml=>{
-                const itemsTag = xml.getElementsByTagName('items');
-                console.log(itemsTag[0].childNodes);
-                const items = itemsTag[0].childNodes;
-                items.forEach(item=>{
-                    let category = item.querySelector('category');
-                    if(category.textContent === 'T1H' ){
-                        let obsrValue = item.querySelector('obsrValue').textContent;
-                        if( 900 > parseInt(obsrValue) > -900){
-                            setDegrees(obsrValue + '℃');
-                        } else {
-                            setDegrees('알 수 없음');
-                        }
-                    } else if (category.textContent === 'WSD' ){
-                        let obsrValue = item.querySelector('obsrValue').textContent;
-                        if( 900 > parseInt(obsrValue) > -900){
-                            setWindSpeed(obsrValue + 'm/s');
-                        } else {
-                            setDegrees('알 수 없음');
-                        }
-                    } else if (category.textContent === 'SKY' ){
-                        let obsrValue = item.querySelector('obsrValue').textContent;
-                        setSky(obsrValue);
-                    } else if (category.textContent === 'PTY' ){
-                        let obsrValue = item.querySelector('obsrValue').textContent;
-                        setRain(obsrValue);
+    //날씨api
+    async function weatherData(url=""){
+        const [response] = await Promise.all([fetch(url)]);
+        return response;
+    }
+    weatherData(weatherUrl)
+        .then(res => res.text())
+        .then(str=>new DOMParser().parseFromString(str,'application/xml'))
+        .then(xml=>{
+            const itemsTag = xml.getElementsByTagName('items');
+            const items = itemsTag[0].childNodes;
+            items.forEach(item=>{
+                let category = item.querySelector('category');
+                if(category.textContent === 'T1H' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    if( 900 > parseInt(obsrValue) > -900){
+                        setDegrees(obsrValue + '℃');
+                    } else {
+                        setDegrees('알 수 없음');
                     }
-                })
+                } else if (category.textContent === 'WSD' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    if( 900 > parseInt(obsrValue) > -900){
+                        setWindSpeed(obsrValue + 'm/s');
+                    } else {
+                        setDegrees('알 수 없음');
+                    }
+                } else if (category.textContent === 'SKY' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    setSky(obsrValue);
+                } else if (category.textContent === 'PTY' ){
+                    let obsrValue = item.querySelector('obsrValue').textContent;
+                    setRain(obsrValue);
+                }
             })
-        // weather cloud, sunny rainy partlyCloudyDay weatherSnowy
-        // 하늘 1 : 맑음, 3 : 구름많음, 4 : 흐림
-        // 강수 0 : 없음, 1 : 비, 2 : 비/눈, 3 : 눈, 5 : 빗방울, 6 : 빗방울/눈날림, 7 : 눈날림
-        if(sky === 1 && rain === 0) {
-            setIcon('sunny')
-        } else if(sky === 3 && rain === 0) {
-            setIcon('partly_cloudy_day');
-        } else if(sky === 4 && rain === 0) {
-            setIcon('cloud');
-        } else if(sky === 4 && (rain === 1 || rain === 2 || rain === 5 || rain === 6)) {
-            setIcon('rainy');
-        } else if (sky === 4 && (rain === 3 || rain === 7)) {
-            setIcon('weather_snowy');
-        }
-    }, [])
+        })
+    // weather cloud, sunny rainy partlyCloudyDay weatherSnowy
+    // 하늘 1 : 맑음, 3 : 구름많음, 4 : 흐림
+    // 강수 0 : 없음, 1 : 비, 2 : 비/눈, 3 : 눈, 5 : 빗방울, 6 : 빗방울/눈날림, 7 : 눈날림
+    if(sky === 1 && rain === 0) {
+        setIcon('sunny')
+    } else if(sky === 3 && rain === 0) {
+        setIcon('partly_cloudy_day');
+    } else if(sky === 4 && rain === 0) {
+        setIcon('cloud');
+    } else if(sky === 4 && (rain === 1 || rain === 2 || rain === 5 || rain === 6)) {
+        setIcon('rainy');
+    } else if (sky === 4 && (rain === 3 || rain === 7)) {
+        setIcon('weather_snowy');
+    }
 
-    function success(e) {
+    function positionSuccess(e) {
         setLatitude(e.coords.latitude)
         setLongitude(e.coords.longitude)
         // setLatitude(35.908607)
@@ -120,24 +120,26 @@ function Weather() {
         setXPosition(rs.x);
         setYPosition(rs.y);
     }
-    function error(e) {
+    function positionError(e) {
         return;
     }
 
     return (
-        <WeatherStyle>
-            <div className="date">{year}년 {month}월 {day}일 {weekday}요일 {hour}시</div>
-            <div className="weather_data">
-                <div className="weather_area">{weatherArea1} {weatherArea2}</div>
-                <div className="weather_figure">
-                    <div className="weather_degrees">{degrees}</div>
-                    <div className="weather_wind">{windSpeed}</div>
+        <Suspense fallback={<Loading/>}>
+            <WeatherStyle>
+                <div className="date">{year}년 {month}월 {day}일 {weekday}요일 {hour}시 기준</div>
+                <div className="weather_data">
+                    <div className="weather_area">{weatherArea1} {weatherArea2}</div>
+                    <div className="weather_figure">
+                        <div className="weather_degrees">{degrees}</div>
+                        <div className="weather_wind">{windSpeed}</div>
+                    </div>
+                    <div className="weather_icon">
+                        <span className="material-symbols-rounded">{icon}</span>
+                    </div>
                 </div>
-                <div className="weather_icon">
-                    <span className="material-symbols-rounded">{icon}</span>
-                </div>
-            </div>
-        </WeatherStyle>
+            </WeatherStyle>
+        </Suspense>
     )
 }
 
@@ -169,6 +171,7 @@ const WeatherStyle = styled.div`
     }
     .weather_icon span {
         font-size: 40px;
+        font-weight: 700;
     }
 `
 
