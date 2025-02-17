@@ -4,7 +4,6 @@ import Dressing from "./components/Dressing.jsx";
 import BoardList from "./components/BoardList.jsx";
 import Home from "./Home.jsx";
 import NotFind from "./components/NotFind.jsx";
-import Header from "./components/Header.jsx";
 import BoardView from "./components/BoardView.jsx";
 
 function App() {

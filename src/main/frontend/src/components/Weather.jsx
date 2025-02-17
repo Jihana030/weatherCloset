@@ -1,12 +1,9 @@
-import React, {Suspense, useEffect, useState} from "react";
+import React, {Suspense, useState} from "react";
 import styled from "styled-components";
 import useDfsXyConv from "./hooks/useDfsXyConv.jsx";
 import Loading from "./Loading.jsx";
-import Header from "./Header.jsx";
 
 function Weather() {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     // 위치 주소
     const [weatherArea1, setWeatherArea1] = useState('');
     const [weatherArea2, setWeatherArea2] = useState('');
