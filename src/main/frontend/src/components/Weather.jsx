@@ -37,10 +37,25 @@ function Weather() {
     const [rain, setRain] = useState(1);
     const [icon, setIcon] = useState('sunny');
 
+    function positionSuccess(e) {
+        setLatitude(e.coords.latitude)
+        setLongitude(e.coords.longitude)
+        // setLatitude(35.908607)
+        // setLongitude(128.608271)
+        // 기상청 격자값으로 변환
+        rs = useDfsXyConv("toXY", latitude, longitude);
+        setXPosition(rs.x);
+        setYPosition(rs.y);
+    }
+    function positionError(e) {
+        return;
+    }
+
     window.navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
     // 위도, 경도로 현재 위치 찾기(kakao api)
     const kakaoKey = import.meta.env.VITE_KAKAO_API_KEY;
     let kakaoAddrUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
+
     async function addrData(url="", data={}){
         const response = await fetch(url,{
             method: 'GET',
@@ -105,20 +120,6 @@ function Weather() {
         setIcon('rainy');
     } else if (sky === 4 && (rain === 3 || rain === 7)) {
         setIcon('weather_snowy');
-    }
-
-    function positionSuccess(e) {
-        setLatitude(e.coords.latitude)
-        setLongitude(e.coords.longitude)
-        // setLatitude(35.908607)
-        // setLongitude(128.608271)
-        // 기상청 격자값으로 변환
-        rs = useDfsXyConv("toXY", latitude, longitude);
-        setXPosition(rs.x);
-        setYPosition(rs.y);
-    }
-    function positionError(e) {
-        return;
     }
 
     return (

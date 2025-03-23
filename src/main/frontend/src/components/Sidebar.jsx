@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+
+function getLinkStyle({ isActive }) {
+    return {
+        background:  isActive ? 'var(--main-blue04)' : undefined,
+    };
+}
 
 function Sidebar() {
     return (
         <CategoryStyle>
-            <Link to="dressing" className="select li">옷장</Link>
-            <Link to="/" className="li">지역변경</Link>
-            <Link to="boardList" className="li">게시판</Link>
-            <Link to="/" className="li">마이페이지</Link>
+            <NavLink to="/" className="li" style={getLinkStyle}>옷장</NavLink>
+            <NavLink to="location" className="li" style={getLinkStyle}>지역변경</NavLink>
+            <NavLink to="boardList" className="li" style={getLinkStyle}>게시판</NavLink>
+            <NavLink to="mypage" className="li" style={getLinkStyle}>마이페이지</NavLink>
         </CategoryStyle>
     )
 }
@@ -25,9 +31,6 @@ const CategoryStyle = styled.ul`
         color: var(--main-white);
         padding: 16px;
         cursor: pointer;
-    }
-    .li.select {
-        background: var(--main-blue04);
     }
 `
 

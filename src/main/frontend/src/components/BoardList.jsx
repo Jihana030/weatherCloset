@@ -55,6 +55,7 @@ const TableStyled = styled.div`
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-top: 20px;
         span {
             cursor: pointer;
         }
@@ -63,6 +64,9 @@ const TableStyled = styled.div`
         }
         .num {
             color: var(--main-blue03);
+            span {
+                padding: 0 5px;
+            }
         }
     }
 `
